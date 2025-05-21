@@ -20,4 +20,19 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 # }
 
 explore: sales{}
-explore: fact_sales{}
+explore: fact_sales{
+
+  join: dim_customer {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${dim_customer.customer_number} = ${fact_sales.customer_number} ;;
+  }
+  join: dim_product {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${dim_product.product_number} = ${fact_sales.product_number} ;;
+  }
+
+}
+explore: dim_customer{}
+explore: dim_product{}
